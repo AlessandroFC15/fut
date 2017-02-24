@@ -675,12 +675,9 @@ class Core(object):
         # return rc
         return [itemParse(i) for i in rc['players']]
 
-    '''
+    
     def squads(self):
-        """Return squads list."""
-        # TODO: ability to get full squad info (full=True)
-        return self.squad(squad_id='list')
-    '''
+        return self.__get__('https://utas.external.s3.fut.ea.com/ut/game/fifa17/squad/list')
 
     def tradeStatus(self, trade_id):
         """Return trade status.
@@ -812,6 +809,7 @@ class Core(object):
         """Return all stats."""
         # TODO: add self.urls['fut']['Stats']
         # won-draw-loss
+        print(self.urls['fut']['user'])
         rc = self.__get__(self.urls['fut']['user'])
         data = {
             'won': rc['won'],
@@ -863,3 +861,9 @@ class Core(object):
         """
         url = '{0}/{1}'.format(self.urls['fut']['ActiveMessage'], message_id)
         self.__delete__(url)
+
+    def applyPlayerContract(self, player_id, contract_type=None, isRare=None):
+        payload = {"apply":[{"id": player_id}]}
+
+        self.__post__('https://utas.external.s3.fut.ea.com/ut/game/fifa17/item/resource/5001001', data=json.dumps(payload))
+        
