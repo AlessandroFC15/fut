@@ -53,6 +53,7 @@ main_widget_kv = '''
 #:import MDThemePicker kivymd.theme_picker.MDThemePicker
 #:import MDBottomNavigation kivymd.tabs.MDBottomNavigation
 #:import MDBottomNavigationItem kivymd.tabs.MDBottomNavigationItem
+#:import hex kivy.utils.get_color_from_hex
 
 NavigationLayout:
     id: nav_layout
@@ -147,9 +148,10 @@ NavigationLayout:
             on_release: app.root.ids.scr_mngr.current = 'toolbar'
     BoxLayout:
         orientation: 'vertical'
+
         Toolbar:
             id: toolbar
-            title: 'KivyMD Kitchen Sink'
+            title: 'BPMContracts'
             md_bg_color: app.theme_cls.primary_color
             background_palette: 'Primary'
             background_hue: '500'
@@ -157,29 +159,55 @@ NavigationLayout:
             right_action_items: [['dots-vertical', lambda x: app.root.toggle_nav_drawer()]]
         ScreenManager:
             id: scr_mngr
+            canvas.before:
+                Color:
+                    rgba: hex('#631E71')
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
             Screen:
                 name: 'login'
-
+                
                 MDCard:
                     size_hint: None, None
-                    size:     dp(320), dp(180)
-                    pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                    size:     dp(320), dp(480)
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
                     BoxLayout:
                         orientation: 'vertical'
+                        padding: 20
 
-                        MDLabel:
-                            font_style: 'Display1'
-                            theme_text_color: 'Primary'
-                            text: "SIGN-IN"
-                            halign: 'center'
+                        MDTextField:
+                            hint_text: "E-mail"
 
+                        MDTextField:
+                            id: text_field_error
+                            hint_text: "Password"
+                            helper_text: "Two is my least favorite number"
+                            helper_text_mode: "on_error"
+                            password: True
 
+                        HackedDemoNavDrawer:
+                            NavigationDrawerToolbar:
+                                title: "Platform"
+                            NavigationDrawerIconButton:
+                                active_color_type: 'custom'
+                                text: "PS4"
+                                active_color: hex('#0068bf')
+                            NavigationDrawerIconButton:
+                                active_color_type: 'custom'
+                                text: "XBOX One"
+                                active_color: hex('#107c10')
 
+                        MDRaisedButton:
+                            text: "Login"
+                            elevation_normal: 2
+                            opposite_colors: True
+                            background_color: hex('#e534aa')
+                            pos_hint: {'center_x': 0.5}
 
-
-
-
+            
             Screen:
                 name: 'bottomsheet'
                 MDRaisedButton:

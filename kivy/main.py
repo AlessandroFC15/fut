@@ -21,9 +21,6 @@ class LoginScreen(FloatLayout):
         self.password = TextInput(password=True, multiline=False)
         self.add_widget(self.password)
 
-        self.confirmationButton = Button(text='Confirm')
-        self.confirmationButton.bind(on_press=self.login)
-        self.add_widget(self.confirmationButton)
 
     def login(self, instance):
         print('>> Loging in...')
